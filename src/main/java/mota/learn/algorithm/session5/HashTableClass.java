@@ -14,35 +14,24 @@ public class HashTableClass {
 
         MohDictionary<Object, String>mohDictionary = new MohDictionary<>();
 
-        mohDictionary.put("Mohsen", "Taheri");
-        mohDictionary.put("Sahel", "Hanife");
-        mohDictionary.put("Hadi", "Mansour");
-        mohDictionary.put("Mohsen", "Taheri1");
-        mohDictionary.put(12234, "hiiii");
-        mohDictionary.put(13234, "hiiii2");
+        mohDictionary.put("foo", "11111");
+        mohDictionary.put("bar", "22222");
+        mohDictionary.put("baz", "33333");
+        mohDictionary.put("foo", "121212");
+        mohDictionary.put(12234, "foo1");
+        mohDictionary.put(13234, "bar2");
         System.out.println(mohDictionary.size());
         System.out.println(mohDictionary.remove("aaaa"));
         System.out.println(mohDictionary.size());
-        System.out.println(mohDictionary.remove("Sahel"));
+        System.out.println(mohDictionary.remove("bar"));
         System.out.println(mohDictionary.size());
 
-        System.out.println(mohDictionary.get("Mohsen"));
-        System.out.println(mohDictionary.get("Sahel"));
-        System.out.println(mohDictionary.get("Hadi"));
+        System.out.println(mohDictionary.get("foo"));
+        System.out.println(mohDictionary.get("bar"));
+        System.out.println(mohDictionary.get("baz"));
+        System.out.println(mohDictionary.get(13234));
 
 
 
-
-        /*for (int j = 0; j < 1000; j++){
-
-            Integer i = new Random().nextInt(10000);
-            System.out.println(i + " - " + (i - (int)(i / 100)*100) + " - " + i.hashCode());
-
-            if (list.contains(i.hashCode())){
-                throw new Exception("duplicate hashCode !!!!!");
-            }
-
-            list.add(i.hashCode());
-        }*/
     }
 }

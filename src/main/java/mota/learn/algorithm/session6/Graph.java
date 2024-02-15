@@ -1,4 +1,3 @@
-/*
 package mota.learn.algorithm.session6;
 
 import java.util.*;
@@ -9,19 +8,20 @@ import java.util.concurrent.LinkedBlockingQueue;
 
 public class Graph {
 
-    static Person mohsen;
-    static Person alice;
-    static Person bob;
-    static Person claire;
-    static Person anuj;
-    static Person peggy;
-    static Person thom;
-    static Person jonny;
-    static Map<Person, Person[]> graphMap = new HashMap();
-    static LinkedBlockingQueue<Person> personQueue = new LinkedBlockingQueue();
-    static List<Person> searchedPerson = new ArrayList();
+    private static Person mohsen;
+    private static Person alice;
+    private static Person bob;
+    private static Person claire;
+    private static Person anuj;
+    private static Person peggy;
+    private static Person thom;
+    private static Person jonny;
+    private static Map<String, Person[]> graphMap = new HashMap();
+    private static LinkedBlockingQueue<Person> personQueue = new LinkedBlockingQueue();
+    private static List<Person> searchedPerson = new ArrayList();
+    private static StringBuilder path = new StringBuilder();
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException {
         init();
 
         Person person = searchQueue();
@@ -29,12 +29,22 @@ public class Graph {
         if (person == null){
             System.out.println("There is not mango seller!");
         } else {
-            System.out.println(person.name + " is mango seller!");
+            System.out.println(person.getName() + " is mango seller!");
+        }
+
+
+        person = searchQueueWithPath();
+
+        if (person == null){
+            System.out.println("There is not mango seller!");
+        } else {
+            System.out.println(person.getName() + " is mango seller!");
+            System.out.println(person.getName() + getPath(person) );
         }
     }
 
     private static Person searchQueue(){
-        personQueue.addAll(Arrays.asList(graphMap.get(mohsen)));
+        personQueue.addAll(Arrays.asList(graphMap.get(mohsen.getName())));
 
         while (!personQueue.isEmpty()){
             Person person = personQueue.poll();
@@ -42,10 +52,30 @@ public class Graph {
             if (searchedPerson.contains(person))
                 continue;
 
-            if (person.isMangoSeller){
+            if (person.isMangoSeller()){
                 return person;
             } else {
-                personQueue.addAll(Arrays.asList(graphMap.get(person)));
+                personQueue.addAll(Arrays.asList(graphMap.get(person.getName())));
+            }
+
+            searchedPerson.add(person);
+        }
+        return null;
+    }
+
+    private static Person searchQueueWithPath() throws InterruptedException {
+        addChildsToQueue(mohsen);
+
+        while (!personQueue.isEmpty()){
+            Person person = personQueue.poll();
+
+            if (searchedPerson.contains(person))
+                continue;
+
+            if (person.isMangoSeller()){
+                return person;
+            } else {
+                addChildsToQueue(person);
             }
 
             searchedPerson.add(person);
@@ -63,15 +93,36 @@ public class Graph {
         thom = new Person("Thom", true);
         jonny = new Person("Jonny", false);
 
-        graphMap.put(mohsen, new Person[]{alice, bob, claire});
-        graphMap.put(bob, new Person[]{anuj, peggy});
-        graphMap.put(alice, new Person[]{peggy});
-        graphMap.put(claire, new Person[]{thom, jonny});
-        graphMap.put(anuj, new Person[0]);
-        graphMap.put(peggy, new Person[]{mohsen});
-        graphMap.put(thom, new Person[0]);
-        graphMap.put(jonny, new Person[0]);
+        graphMap.put(mohsen.getName(), new Person[]{alice, bob, claire});
+        graphMap.put(bob.getName(), new Person[]{anuj, peggy});
+        graphMap.put(alice.getName(), new Person[]{peggy});
+        graphMap.put(claire.getName(), new Person[]{thom, jonny});
+        graphMap.put(anuj.getName(), new Person[0]);
+        graphMap.put(peggy.getName(), new Person[]{mohsen});
+        graphMap.put(thom.getName(), new Person[0]);
+        graphMap.put(jonny.getName(), new Person[0]);
     }
 
+    private static String getPath(Person person){
+        getParent(person);
+
+        return path.toString();
+    }
+
+    private static Person getParent(Person person){
+        if (person.getParent() == null)
+            return null;
+
+        path.append("-->").append(person.getParent().getName());
+        return getParent(person.getParent());
+    }
+
+    private static void addChildsToQueue(Person key) throws InterruptedException {
+        Person[] persons = graphMap.get(key.getName());
+        for (Person person : persons) {
+            Person person1 = new Person(person.getName(), person.isMangoSeller());
+            person1.setParent(key);
+            personQueue.put(person1);
+        }
+    }
 }
-*/

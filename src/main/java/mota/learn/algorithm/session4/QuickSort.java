@@ -1,5 +1,7 @@
 package mota.learn.algorithm.session4;
 
+import mota.learn.algorithm.session2.SelectionSort;
+
 import java.util.*;
 
 public class QuickSort {
@@ -10,21 +12,30 @@ public class QuickSort {
 
     public static void main(String[] args) {
 
-       // Integer[] arr = generateRandomArray(10000000);
+        long elapsed0 = new Date().getTime();
+        Integer[] arr = generateRandomArray(20000);
+        elapsed0 = new Date().getTime() - elapsed0;
+
+        System.out.println("init : " + elapsed0);
 
         long elapsed1 = new Date().getTime();
-        System.out.println(Arrays.toString(qSort1(arr1)));
-        elapsed1 = elapsed1 - new Date().getTime();
+        qSort1(arr);
+        elapsed1 = new Date().getTime() - elapsed1;
+        System.out.println("qSort1 : " + elapsed1);
 
         long elapsed2 = new Date().getTime();
-        System.out.println(Arrays.toString(qSort2(arr1)));
-        elapsed2 = elapsed2 - new Date().getTime();
+        qSort2(arr);
+        elapsed2 = new Date().getTime() - elapsed2;
+        System.out.println("qSort2 : " + elapsed2);
+
+
+        long elapsed3 = new Date().getTime();
+        SelectionSort.doSelectionSort(arr);
+        elapsed3 = new Date().getTime() - elapsed3;
+        System.out.println("selectionSort : " + elapsed3);
 
         System.out.println(counter1);
         System.out.println(counter2);
-
-        System.out.println(elapsed1);
-        System.out.println(elapsed2);
     }
 
     static Integer[] qSort1(Integer[] arr){

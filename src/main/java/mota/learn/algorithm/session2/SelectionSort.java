@@ -24,7 +24,7 @@ public class SelectionSort {
         return minIndex;
     }
 
-    static Integer[] doSelectionSort(Integer[] arr){
+    public static Integer[] doSelectionSort(Integer[] arr){
 
         Integer[] sortedArr = new Integer[arr.length];
 
